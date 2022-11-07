@@ -11,6 +11,7 @@ on:
 env:
   AWS_REGION: "ap-northeast-1"
   AWS_ROLE_ARN: ${{ (github.ref == endsWith(github.ref, '/main') && secrets.AWS_PRODUCT_ROLE_ARN) || secrets.AWS_STAGING_ROLE_ARN }}
+  TEST: ${{ (github.ref == endsWith(github.ref, '/main') && "Product is") || "Staging is" }}
 
 # AWS OpenID Connect用
 permissions:
@@ -24,6 +25,7 @@ jobs:
       matrix:
         python-version: ["3.9"]
     steps:
+      - run: echo $TEST
       - uses: actions/checkout@v3
       - name: setup-node
         uses: actions/setup-node@v3
