@@ -39,7 +39,6 @@ jobs:
         run: npm run build
         working-directory: src
       - uses: aws-actions/configure-aws-credentials@v1
-        if: contains(github.ref, '/feature')
         with:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region:  ${{ env.AWS_REGION }}
