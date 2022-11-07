@@ -41,7 +41,7 @@ jobs:
         run: npm install
         working-directory: src
       - name: export html
-        if: github.ref == endsWith(github.ref, '/main')
+        if: endsWith(github.ref, '/main')
         run: npm run build
         working-directory: src
       - uses: aws-actions/configure-aws-credentials@v1
@@ -50,7 +50,7 @@ jobs:
           aws-region:  ${{ env.AWS_REGION }}
       - run: aws sts get-caller-identity
       - name: set env(product)
-        if: github.ref == endsWith(github.ref, '/main')
+        if: endsWith(github.ref, '/main')
         run: echo 'ENVIRONMENT=product' >> $GITHUB_ENV
       - name: set env(staging)
         if: contains(github.ref, '/feature')
