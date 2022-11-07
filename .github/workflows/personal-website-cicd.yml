@@ -25,12 +25,6 @@ jobs:
         python-version: ["3.9"]
     steps:
       - uses: actions/checkout@v3
-      - run: |
-          echo '1' $GITHUB_REF
-          echo '2' ${{ github.ref }}
-          echo '3' ${{ github.ref_name }}
-          echo '4' ${{ github.head_ref }}
-          echo '5' ${{ github.base_ref }}
       - name: setup-node
         uses: actions/setup-node@v3
         with:
@@ -56,7 +50,8 @@ jobs:
         if: contains(github.ref, '/feature')
         run: echo 'ENVIRONMENT=staging' >> $GITHUB_ENV
       - name: deploy to s3
-        run: bash ./src/upload.sh $ENVIRONMENT
+        run: bash ./upload.sh $ENVIRONMENT
+        working-directory: src
       - name: Slack notification of success
         uses: rtCamp/action-slack-notify@v2.2.0
         env:
