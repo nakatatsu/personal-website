@@ -10,7 +10,8 @@ on:
 
 env:
   AWS_REGION: "ap-northeast-1"
-  AWS_ROLE_ARN: "${{ secrets.AWS_ROLE_ARN }}"
+  AWS_PRODUCT_ROLE_ARN: "${{ secrets.AWS_PRODUCT_ROLE_ARN }}"
+  AWS_STAGING_ROLE_ARN: "${{ secrets.AWS_STAGING_ROLE_ARN }}"
 
 # AWS OpenID Connect用
 permissions:
@@ -37,9 +38,17 @@ jobs:
       - name: export html
         run: npm run build
         working-directory: src
+      # product role
       - uses: aws-actions/configure-aws-credentials@v1
+        if: github.ref == 'refs/heads/master'
         with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          role-to-assume: ${{ env.AWS_PRODUCT_ROLE_ARN }}
+          aws-region:  ${{ env.AWS_REGION }}
+      # staging role
+      - uses: aws-actions/configure-aws-credentials@v1
+        if: contains(github.ref, 'feature')
+        with:
+          role-to-assume: ${{ env.AWS_STAGING_ROLE_ARN }}
           aws-region:  ${{ env.AWS_REGION }}
       - run: aws sts get-caller-identity
       - name: set env(product)
