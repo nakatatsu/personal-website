@@ -31,7 +31,7 @@ export default function ProductHero() {
         variant="h5"
         sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}
       >
-        <p>IT業界で働くクラウドエンジニア＆プログラマー tricrowの個人サイトです。</p>
+        <p>IT業界で働くクラウドエンジニア兼プログラマー tricrowの個人サイトです。</p>
         <p>using AWS, GCP, Terraform/CloudFormation/Ansible, C#, C++, Go, php, Typescript(javascript).</p>
       </Typography>
       <Button
