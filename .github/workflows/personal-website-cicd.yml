@@ -40,22 +40,22 @@ jobs:
         working-directory: src
       # product role
       - uses: aws-actions/configure-aws-credentials@v1
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == endsWith(github.ref, '/main')
         with:
           role-to-assume: ${{ env.AWS_PRODUCT_ROLE_ARN }}
           aws-region:  ${{ env.AWS_REGION }}
       # staging role
       - uses: aws-actions/configure-aws-credentials@v1
-        if: contains(github.ref, 'feature')
+        if: contains(github.ref, '/feature')
         with:
           role-to-assume: ${{ env.AWS_STAGING_ROLE_ARN }}
           aws-region:  ${{ env.AWS_REGION }}
       - run: aws sts get-caller-identity
       - name: set env(product)
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == endsWith(github.ref, '/main')
         run: echo 'ENVIRONMENT=product' >> $GITHUB_ENV
       - name: set env(staging)
-        if: contains(github.ref, 'feature')
+        if: contains(github.ref, '/feature')
         run: echo 'ENVIRONMENT=staging' >> $GITHUB_ENV
       - name: deploy to s3
         run: bash ./src/upload.sh $ENVIRONMENT
