@@ -1,4 +1,4 @@
-name: send_mail CI/CD
+name: personal website CI/CD
 on:
   workflow_dispatch:
       
@@ -27,15 +27,16 @@ jobs:
       - uses: actions/checkout@v3
       - name: setup-node
         uses: actions/setup-node@v3
+        working-directory: ./src
         with:
           node-version: 16
           cache: npm
-      - name: change dir
-        run: cd src
       - name: Install dependencies
         run: npm install
+        working-directory: ./src
       - name: export html
         run: npm run build
+        working-directory: ./src
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
@@ -48,7 +49,7 @@ jobs:
         if: contains(github.ref, 'feature')
         run: echo 'ENVIRONMENT=staging' >> $GITHUB_ENV
       - name: deploy to s3
-        run: bash ./upload.sh $ENVIRONMENT
+        run: bash ./src/upload.sh $ENVIRONMENT
       - name: Slack notification of success
         uses: rtCamp/action-slack-notify@v2.2.0
         env:
