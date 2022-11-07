@@ -27,16 +27,16 @@ jobs:
       - uses: actions/checkout@v3
       - name: setup-node
         uses: actions/setup-node@v3
-        working-directory: ./src
+        working-directory: src
         with:
           node-version: 16
           cache: npm
       - name: Install dependencies
         run: npm install
-        working-directory: ./src
+        working-directory: src
       - name: export html
         run: npm run build
-        working-directory: ./src
+        working-directory: src
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ env.AWS_ROLE_ARN }}
