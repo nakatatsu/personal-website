@@ -11,7 +11,7 @@ function AppHead() {
     <React.Fragment>
       <Head>
         <title>Tricrow&apos;s personal website</title>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1434344380503678" crossorigin="anonymous"></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1434344380503678" crossOrigin="anonymous"></script>
         <meta name="description" content="Tricrow's personal website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
